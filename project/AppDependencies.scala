@@ -5,18 +5,22 @@ import sbt._
 
 object AppDependencies {
 
+  lazy val testScope: String = "test, it"
+
   val compile = Seq(
 
-    "uk.gov.hmrc"             %% "simple-reactivemongo"     % "7.20.0-play-26",
-    "uk.gov.hmrc"             %% "bootstrap-play-26"        % "0.45.0"
+    "uk.gov.hmrc" %% "play-reactivemongo" % "6.2.0",
+//    "uk.gov.hmrc"             %% "microservice-bootstrap"   % "10.6.0"
+    "uk.gov.hmrc" %% "bootstrap-play-25" % "4.13.0"
   )
 
   val test = Seq(
-    "uk.gov.hmrc"             %% "bootstrap-play-26"        % "0.45.0" % Test classifier "tests",
-    "org.scalatest"           %% "scalatest"                % "3.0.8"                 % "test",
-    "com.typesafe.play"       %% "play-test"                % current                 % "test",
-    "org.pegdown"             %  "pegdown"                  % "1.6.0"                 % "test, it",
-    "org.scalatestplus.play"  %% "scalatestplus-play"       % "3.1.2"                 % "test, it"
+  "org.scalatest"           %% "scalatest"                % "3.0.0"  % testScope,
+  "com.typesafe.play"       %% "play-test"                % current  % testScope,
+  "org.pegdown"             %  "pegdown"                  % "1.6.0"  % testScope,
+  "org.scalatestplus.play"  %% "scalatestplus-play"       % "2.0.0"  % testScope,
+  "org.mockito"             %  "mockito-core"             % "2.13.0" % testScope,
+  "uk.gov.hmrc"             %% "service-integration-test" % "0.3.0"  % "it"
   )
-
+  def apply(): Seq[ModuleID] = compile ++ test
 }
